@@ -8,74 +8,72 @@
 // getItems(objectData)
 
 
+var data = products.items;
+
 function getItemsCount(itemData) {
   return itemData.items.length;
 }
 
-
-// get items
-
-
-
-var getItems = function(objectData){
-  var i =0;
-  while (i < objectData.items.length){
-    console.log(objectData.items[i]);
-    i++;
-  }
-  console.log("done");
-}
-
-
-
-// get items by brand
-// var getItemsByBrand = function(items,brand){
-//   var itemsByBrand = [];
-//   var i =0;
-//   while (i < items.items.length){
-//     if (items.items[i].product.brand === brand ){
-//       itemsByBrand.push(items.items[i].product.title);
-//       // var itemsBy[i] = [];
-//       // console.log(itemBy[i]);
-//     }
-//     i++;
-//   }
-//   console.log(itemsByBrand);
-// }
-
-// get items by brand
-var getItemsByBrand = function(items,brand){
-  var itemsByBrand = [];
-  for (var i = 0; i < items.items.length; i++){
-    if (items.items[i].product.brand === brand ){
-      itemsByBrand.push(items.items[i].product.title);
-      console.log(items.items[i].product.title);
-      // var itemsBy[i] = [];
-      // console.log(itemBy[i]);
-    }
-  }
-  return itemsByBrand;
-}
-
-// var itemsByCanon = getItemsByBrand(products, "Canon");
-
-// get items by brand
-
-// get items by author
-// var getItemsByAuthor = function(items,author){
-//   var itemsByAuthor = [];
-//   for (var i = 0; i < items.items.length; i++){
-//     // console.log(items.items[i].product.author.name);
-//     if (author === items.items[i].product.author.name){
-//       itemsByAuthor.push(items.items[i].product.title);
-//       console.log([i] + " , " + (items.items[i].product.author.name) + " - " + itemsByAuthor );
-//       }
-//     }
-//   }
-
-
-// how can i create a new variable dynamically i.e. itemsInCanon
-
 /*
  * Define and use your functions here
  */
+ var getItems = function(objectData) {
+     return objectData.items;
+ };
+
+
+
+ var getItemsByBrand = function(items,brand) {
+   var itemsByBrand = [];
+   for(let i = 0 ; i < items.length; i ++){
+     if (items[i].product.brand === brand ){
+       itemsByBrand.push(items[i]);
+     }
+   }
+   return itemsByBrand;
+ };
+
+ var getItemsByAuthor = function(items,author) {
+   var itemsByAuthor = [];
+   for(let i = 0 ; i < items.length; i ++){
+     if (items[i].product.author.name.includes(author)) {
+       itemsByAuthor.push(items[i]);
+     }
+   }
+   return itemsByAuthor;
+ };
+
+ var getAvailableProducts = function(items) {
+   var availableProducts = [];
+   for(let i = 0 ; i <  items.length; i ++){
+     if (items[i].product.inventories[0].availability === "inStock" ){
+       availableProducts.push(items[i]);
+     }
+   }
+   return availableProducts;
+ };
+
+
+
+//Part One
+
+// All items made by Sony.
+console.log('All items made by Sony');
+console.log(getItemsByBrand(data, 'Sony'));
+
+// All items made by Sony that are available.
+console.log('All items made by Sony that are available');
+var sony = getItemsByBrand(data, 'Sony');
+console.log(getAvailableProducts(sony));
+
+// All available items by the author "Adorama Camera"
+console.log('All available items by the author Adorama Camera');
+var adorama = getItemsByAuthor(data, 'Adorama Camera');
+console.log(adorama);
+console.log(getAvailableProducts(adorama));
+
+// All items made by Nikon with the author eBay.
+console.log('All items made by Nikon with the author eBay');
+var nikon = getItemsByBrand(data, 'Nikon')
+console.log(nikon);
+console.log(getItemsByAuthor(nikon, 'eBay'));
